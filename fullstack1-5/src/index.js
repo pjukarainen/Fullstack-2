@@ -1,61 +1,53 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-const Osa = (props) => <p>{props.osa} {props.tehtavia}</p>
-const Otsikko = (props) => <h1>{props.kurssi.nimi}</h1>
-const Sisalto = (props) => {
-  const osat = props.kurssi.osat;
-  const rivit = () => osat.map(osa => <li key={osa.id}>{osa.nimi} {osa.tehtavia}</li>)
-  return(
-    <ul>
-     {rivit()}
-    </ul>
-  )
-}
-const Yhteensa = (props) => {
-  const yhteensa = props.kurssi.osat
-  
-  return(
-    <p>yhteensä {yhteensa.reduce((summa, tehtava) => summa + tehtava.tehtavia,)} tehtävää</p>
-  )
-}
-
-const Kurssi = (props) => {
-    return(
-    <div>
-       <Otsikko kurssi={props.kurssi}/>
-       <Sisalto kurssi={props.kurssi}/>
-       <Yhteensa kurssi={props.kurssi}/>
-       </div>
-    )
-    }
+import Kurssi from './components/Kurssi'
 
 
-const App = () => {
-    const kurssi = {
-      nimi: 'Half Stack -sovelluskehitys',
-      osat: [
+
+const App = (props) => {
+    const kurssit = [
         {
-          nimi: 'Reactin perusteet',
-          tehtavia: 10,
-          id: 1
+          nimi: 'Half Stack -sovelluskehitys',
+          id: 1,
+          osat: [
+            {
+              nimi: 'Reactin perusteet',
+              tehtavia: 10,
+              id: 1
+            },
+            {
+              nimi: 'Tiedonvälitys propseilla',
+              tehtavia: 7,
+              id: 2
+            },
+            {
+              nimi: 'Komponenttien tila',
+              tehtavia: 14,
+              id: 3
+            }
+          ]
         },
         {
-          nimi: 'Tiedonvälitys propseilla',
-          tehtavia: 7,
-          id: 2
-        },
-        {
-          nimi: 'Komponenttien tila',
-          tehtavia: 14,
-          id: 3
+          nimi: 'Node.js',
+          id: 2,
+          osat: [
+            {
+              nimi: 'Routing',
+              tehtavia: 3,
+              id: 1
+            },
+            {
+              nimi: 'Middlewaret',
+              tehtavia: 7,
+              id: 2
+            }
+          ]
         }
       ]
-    }
   
     return (
       <div>
-        <Kurssi kurssi={kurssi} />
+    {kurssit.map(kurssi => <Kurssi key={kurssi.id} kurssi={kurssi}/>)}
       </div>
     )
   }
