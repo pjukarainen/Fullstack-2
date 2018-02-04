@@ -6,9 +6,14 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas' }
+        {
+             name: 'Arto Hellas',
+             number: '123123'
+    }
       ],
-      newName: ''
+      newName: '',
+      newNumber: ''
+
     }
   }
 
@@ -16,33 +21,41 @@ class App extends React.Component {
       event.preventDefault()
       console.log('nappia painettu')
       const personObject = {
-          name : this.state.newName
+          name: this.state.newName,
+          number: this.state.newNumber
       }
 
-     this.state.persons.forEach((person) => {
+   let y = false
+      this.state.persons.forEach((person) => {
         if (person.name === personObject.name) {
+            y = true
             return alert('Nimi on jo luettelossa'); 
-        } else {
-            const persons = this.state.persons.concat(personObject) 
-            this.setState({
-       
-              persons,
-              newName: ''
-            })
-        }
-                  
+            
+        }              
      })
     
-    
-   
-    
+
+     if (y === false) {
+     const persons = this.state.persons.concat(personObject) 
+     this.setState({
+
+       persons,
+       newName: '',
+       newNumber: ''
+     })
+    }
+     
   }
 
 
-
-  handlePersonsChange = (event) => {
+  handleNameChange = (event) => {
       console.log(event.target.value)
       this.setState({ newName: event.target.value})
+  }
+
+  handleNumberChange = (event) => {
+      console.log(event.target.value)
+      this.setState({ newNumber: event.target.value})
   }
 
   render() {
@@ -53,16 +66,23 @@ class App extends React.Component {
           <div>
             nimi: <input 
             value={this.state.newName}
-            onChange={this.handlePersonsChange}
+            onChange={this.handleNameChange}
             />
           </div>
+          <div>
+             numero: <input
+             value={this.state.newNumber}
+             onChange={this.handleNumberChange}
+             />
+        </div>
+
           <div>
             <button type="submit">lisää</button>
           </div>
         </form>
         <h2>Numerot</h2>
         <ul>
-            {this.state.persons.map(person => <li key={person.name}>{person.name}</li>)}
+            {this.state.persons.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
             </ul>
       </div>
     )
